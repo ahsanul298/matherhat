@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>মাঠের হাট – কৃষকের কাছ থেকে সরাসরি কিনুন</title>
+  <meta name="description" content="কৃষকের কাছ থেকে খুচরা বা পাইকারি পণ্য কিনুন, সরাসরি কথা বলুন।">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Tiro+Bangla&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-mode="retail">
+
+  <a class="skip" href="#bazar">মূল অংশে যান</a>
+
+  <!-- ===== হেডার ===== -->
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a href="#" class="brand" aria-label="মাঠের হাট – হোম">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="30" height="30"><path d="M16 29V13M16 13c0-5 3-8 9-9 0 6-3 9-9 9zM16 19c0-4-2.5-6.5-8-7 0 5 2.5 7 8 7z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="brand-name">মাঠের হাট</span>
+      </a>
+
+      <nav class="main-nav" aria-label="প্রধান মেনু">
+        <a href="#bazar">বাজার</a>
+        <a href="#krishok">কৃষকদের জন্য</a>
+        <a href="#ai">এআই সহায়ক</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="btn btn-ghost" data-auth="login">লগইন</button>
+        <button class="btn btn-solid" data-auth="register">নিবন্ধন করুন</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== হিরো ===== -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1>মাঠ থেকে সরাসরি<br>আপনার হাতে</h1>
+          <p class="lead">কৃষকের কাছ থেকে খুচরা বা পাইকারি কিনুন। দাম, পরিমাণ আর পৌঁছানোর সময় নিয়ে কৃষকের সাথে সরাসরি কথা বলুন।</p>
+
+          <div class="mode-switch" role="group" aria-label="কেনার ধরন">
+            <button type="button" class="mode-btn" data-set-mode="retail" aria-pressed="true">খুচরা কিনব</button>
+            <button type="button" class="mode-btn" data-set-mode="wholesale" aria-pressed="false">পাইকারি কিনব</button>
+          </div>
+
+          <form class="hero-search" id="heroSearch" role="search">
+            <label class="sr-only" for="heroQ">পণ্য খুঁজুন</label>
+            <input id="heroQ" type="search" placeholder="যেমন: আলু, টমেটো, মিনিকেট চাল" autocomplete="off">
+            <button class="btn btn-solid" type="submit">খুঁজুন</button>
+          </form>
+        </div>
+
+        <aside class="board" aria-labelledby="boardTitle">
+          <div class="board-head">
+            <h2 id="boardTitle">আজকের দর</h2>
+            <span class="board-mode" id="boardMode">খুচরা</span>
+          </div>
+          <ul class="board-list" id="boardList"></ul>
+          <p class="board-note">দর কৃষকরা নিজেরাই ঠিক করেন। বিস্তারিত দেখতে পণ্যের কার্ডে যান।</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== বাজার ===== -->
+    <section class="section" id="bazar">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>বাজার</h2>
+          <p id="modeHint">খুচরা দামে কেজি হিসাবে কিনুন।</p>
+        </div>
+
+        <div class="toolbar">
+          <div class="chips" id="chips" role="group" aria-label="ক্যাটাগরি"></div>
+          <div class="toolbar-right">
+            <label class="sr-only" for="q">পণ্য খুঁজুন</label>
+            <input id="q" class="input" type="search" placeholder="পণ্যের নাম লিখুন" autocomplete="off">
+            <label class="sr-only" for="sort">সাজান</label>
+            <select id="sort" class="input">
+              <option value="default">সাজান: ডিফল্ট</option>
+              <option value="asc">দাম: কম থেকে বেশি</option>
+              <option value="desc">দাম: বেশি থেকে কম</option>
+            </select>
+          </div>
+        </div>
+
+        <p class="result-count" id="resultCount" aria-live="polite"></p>
+        <div class="grid" id="grid"></div>
+        <div class="empty" id="empty" hidden>
+          <p><strong>কোনো পণ্য পাওয়া যায়নি।</strong></p>
+          <p>অন্য নাম লিখে খুঁজুন বা ক্যাটাগরি বদলে দেখুন।</p>
+          <button class="btn btn-ghost" id="resetFilters">ফিল্টার মুছুন</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== কৃষকদের জন্য ===== -->
+    <section class="section section-tint" id="krishok">
+      <div class="wrap two-col">
+        <div>
+          <h2>আপনি কৃষক? নিজের ফসল নিজেই বিক্রি করুন</h2>
+          <p class="lead">মধ্যস্বত্বভোগী ছাড়াই ক্রেতার কাছে পৌঁছান। খুচরা আর পাইকারি, দুই দামই আপনি ঠিক করবেন।</p>
+          <ul class="plain-list">
+            <li>খুচরায় কেজি আর পাইকারিতে মণ হিসাবে আলাদা দাম দিন।</li>
+            <li>পাইকারির জন্য ন্যূনতম পরিমাণ ঠিক করে দিন।</li>
+            <li>ক্রেতা চ্যাটে দাম ও পরিমাণ নিয়ে সরাসরি কথা বলবেন।</li>
+            <li>ফসলের রোগ বা দাম নিয়ে প্রশ্ন থাকলে এআই সহায়ককে জিজ্ঞেস করুন।</li>
+          </ul>
+        </div>
+
+        <form class="card-form" id="sellForm" novalidate>
+          <h3>নতুন পণ্য যোগ করুন</h3>
+
+          <div class="field">
+            <label for="f-name">পণ্যের নাম</label>
+            <input id="f-name" class="input" required placeholder="যেমন: দেশি পেঁপে">
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="f-cat">ক্যাটাগরি</label>
+              <select id="f-cat" class="input" required>
+                <option>সবজি</option>
+                <option>ফল</option>
+                <option>ধান-চাল</option>
+                <option>ডাল-মসলা</option>
+                <option>মাছ</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-district">জেলা</label>
+              <input id="f-district" class="input" required placeholder="যেমন: বগুড়া">
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="f-retail">খুচরা দাম (৳ / কেজি)</label>
+              <input id="f-retail" class="input" type="number" min="1" required>
+            </div>
+            <div class="field">
+              <label for="f-whole">পাইকারি দাম (৳ / মণ)</label>
+              <input id="f-whole" class="input" type="number" min="1" required>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="f-min">পাইকারির ন্যূনতম পরিমাণ (মণ)</label>
+              <input id="f-min" class="input" type="number" min="1" value="2" required>
+            </div>
+            <div class="field">
+              <label for="f-stock">মোট মজুত (মণ)</label>
+              <input id="f-stock" class="input" type="number" min="1" required>
+            </div>
+          </div>
+
+          <p class="form-error" id="sellError" role="alert" hidden></p>
+          <button class="btn btn-solid btn-block" type="submit">বাজারে তুলুন</button>
+          <p class="form-foot">১ মণ = ৪০ কেজি</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== এআই ===== -->
+    <section class="section section-dark" id="ai">
+      <div class="wrap two-col two-col-center">
+        <div>
+          <h2>প্রশ্ন আছে? এআই সহায়ককে বলুন</h2>
+          <p class="lead">ফসলের যত্ন, রোগবালাই, দাম ঠিক করা বা কেনাকাটার সিদ্ধান্ত নিয়ে বাংলায় প্রশ্ন করুন।</p>
+          <button class="btn btn-accent" data-open-ai>এআই সহায়কের সাথে কথা বলুন</button>
+        </div>
+        <div class="prompt-list" aria-label="নমুনা প্রশ্ন">
+          <button class="prompt" data-ai-prompt="টমেটো গাছের পাতা কুঁকড়ে যাচ্ছে, কী করব?">টমেটো গাছের পাতা কুঁকড়ে যাচ্ছে, কী করব?</button>
+          <button class="prompt" data-ai-prompt="পাইকারি বিক্রির জন্য দাম কীভাবে ঠিক করব?">পাইকারি বিক্রির জন্য দাম কীভাবে ঠিক করব?</button>
+          <button class="prompt" data-ai-prompt="আলু কীভাবে বেশিদিন ভালো রাখা যায়?">আলু কীভাবে বেশিদিন ভালো রাখা যায়?</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== ফুটার ===== -->
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <div>
+        <p class="brand-name">মাঠের হাট</p>
+        <p class="muted">কৃষক আর ক্রেতার সরাসরি বাজার।</p>
+      </div>
+      <nav class="footer-nav" aria-label="ফুটার মেনু">
+        <a href="#bazar">বাজার</a>
+        <a href="#krishok">কৃষকদের জন্য</a>
+        <a href="#ai">এআই সহায়ক</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- ===== ভাসমান এআই বাটন ===== -->
+  <button class="fab" data-open-ai aria-label="এআই সহায়ক খুলুন">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+    এআই সহায়ক
+  </button>
+
+  <div class="backdrop" id="backdrop" hidden></div>
+
+  <!-- ===== কৃষকের সাথে চ্যাট ===== -->
+  <aside class="drawer" id="chatDrawer" aria-labelledby="chatTitle" aria-hidden="true">
+    <header class="drawer-head">
+      <div>
+        <h3 id="chatTitle">কৃষকের সাথে কথা</h3>
+        <p class="drawer-sub" id="chatSub"></p>
+      </div>
+      <button class="icon-btn" data-close aria-label="বন্ধ করুন">✕</button>
+    </header>
+    <div class="chat-product" id="chatProduct"></div>
+    <div class="messages" id="chatMessages" aria-live="polite"></div>
+    <div class="quick" id="chatQuick">
+      <button type="button">পাইকারি দাম কত?</button>
+      <button type="button">দাম কি কমানো যাবে?</button>
+      <button type="button">কবে পাঠাতে পারবেন?</button>
+    </div>
+    <form class="composer" id="chatForm">
+      <label class="sr-only" for="chatInput">বার্তা লিখুন</label>
+      <input id="chatInput" class="input" placeholder="বার্তা লিখুন" autocomplete="off">
+      <button class="btn btn-solid" type="submit">পাঠান</button>
+    </form>
+    <p class="demo-note">এটি ডেমো চ্যাট। ব্যাকএন্ড যুক্ত হলে বার্তা সরাসরি কৃষকের কাছে যাবে।</p>
+  </aside>
+
+  <!-- ===== এআই প্যানেল ===== -->
+  <aside class="drawer" id="aiDrawer" aria-labelledby="aiTitle" aria-hidden="true">
+    <header class="drawer-head">
+      <div>
+        <h3 id="aiTitle">এআই সহায়ক</h3>
+        <p class="drawer-sub">কৃষি ও বাজার নিয়ে প্রশ্ন করুন</p>
+      </div>
+      <button class="icon-btn" data-close aria-label="বন্ধ করুন">✕</button>
+    </header>
+    <div class="messages" id="aiMessages" aria-live="polite"></div>
+    <div class="quick" id="aiQuick">
+      <button type="button">আজ আলুর ন্যায্য দাম কত?</button>
+      <button type="button">ধানে পোকা লেগেছে, কী করব?</button>
+    </div>
+    <form class="composer" id="aiForm">
+      <label class="sr-only" for="aiInput">প্রশ্ন লিখুন</label>
+      <input id="aiInput" class="input" placeholder="আপনার প্রশ্ন লিখুন" autocomplete="off">
+      <button class="btn btn-solid" type="submit">পাঠান</button>
+    </form>
+    <p class="demo-note">এখন নমুনা উত্তর দেখাচ্ছে। পরে এআই এপিআই যুক্ত হবে।</p>
+  </aside>
+
+  <!-- ===== লগইন / নিবন্ধন ===== -->
+  <dialog class="auth" id="authDialog" aria-labelledby="authTitle">
+    <div class="auth-head">
+      <h3 id="authTitle">লগইন</h3>
+      <button class="icon-btn" id="authClose" aria-label="বন্ধ করুন">✕</button>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab" data-tab="login" aria-selected="true">লগইন</button>
+      <button role="tab" class="tab" data-tab="register" aria-selected="false">নিবন্ধন</button>
+    </div>
+
+    <form id="authForm" novalidate>
+      <fieldset class="role-pick" id="rolePick" hidden>
+        <legend>আপনি কে?</legend>
+        <label><input type="radio" name="role" value="buyer" checked> ক্রেতা</label>
+        <label><input type="radio" name="role" value="farmer"> কৃষক</label>
+      </fieldset>
+
+      <div class="field" id="nameField" hidden>
+        <label for="a-name">আপনার নাম</label>
+        <input id="a-name" class="input" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="a-phone">মোবাইল নম্বর</label>
+        <input id="a-phone" class="input" type="tel" inputmode="numeric" placeholder="01XXXXXXXXX" autocomplete="tel" required>
+      </div>
+      <div class="field">
+        <label for="a-pass">পাসওয়ার্ড</label>
+        <input id="a-pass" class="input" type="password" autocomplete="current-password" required>
+      </div>
+
+      <p class="form-error" id="authError" role="alert" hidden></p>
+      <button class="btn btn-solid btn-block" type="submit" id="authSubmit">লগইন করুন</button>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
